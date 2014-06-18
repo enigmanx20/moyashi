@@ -1,0 +1,18 @@
+<h1>Editing data</h1>
+
+<%= form_for @record, url: project_record_path(@project, @record), html: {class: 'uk-form uk-form-horizontal', enctype: 'multipart/form-data'} do |f| %>
+  <%= render partial: 'form', locals: {f:f} %>
+  
+  <div class="actions">
+    <%= f.submit 'Submit', class: 'uk-button uk-button-primary uk-button-large' %>
+  </div>
+<% end %>
+
+
+<div class="uk-text-right">
+  <%= link_to 'delete this data', project_record_path(@project, @record), class: 'uk-button uk-button-mini uk-button-danger', method: :delete,  data: { confirm: 'Are you sure?' } %>
+</div>
+
+<p>
+  <%= link_to 'Back', project_record_path(@project, @record), class: 'uk-button uk-button-large' %>
+</p>

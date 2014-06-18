@@ -1,0 +1,93 @@
+<%= form_for @project, html: {class: 'uk-form uk-form-horizontal'} do |f| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation" class="uk-alert uk-alert-danger">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+      <% @project.errors.each do |name, msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="uk-form-row">
+      <label class="uk-form-label" for="">Project Name</label>
+      <div class="uk-form-controls">
+        <%= f.text_field :name %>
+      </div>
+  </div>
+  <div class="uk-form-row">
+      <label class="uk-form-label" for="">Project Information</label>
+      <div class="uk-form-controls">
+        <%= f.text_area :comment, rows: 20, cols: 70 %>
+      </div>
+  </div>
+
+
+  <% if @project.new_record? %>
+
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">m/<span class="my-italic">z</span> start</label>
+        <div class="uk-form-controls">
+          <%= f.text_field :m_z_start %>
+        </div>
+    </div>
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">m/<span class="my-italic">z</span> end</label>
+        <div class="uk-form-controls">
+          <%= f.text_field :m_z_end %>
+        </div>
+    </div>
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">m/<span class="my-italic">z</span> interval</label>
+        <div class="uk-form-controls">
+          <%= f.text_field :m_z_interval %>
+        </div>
+    </div>
+  <% else %>
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">m/<span class="my-italic">z</span> interval</label>
+        <div class="uk-form-controls">
+          <%= @project.m_z_start %>
+        </div>
+    </div>
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">m/<span class="my-italic">z</span> interval</label>
+        <div class="uk-form-controls">
+          <%= @project.m_z_end %>
+        </div>
+    </div>
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">m/<span class="my-italic">z</span> interval</label>
+        <div class="uk-form-controls">
+          <%= @project.m_z_interval %>
+        </div>
+    </div>
+
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">Avatar</label>
+        <div class="uk-form-controls">
+          <div>
+            <%= image_tag @project.avatar.url(:medium) %>
+          </div>
+          <label>
+            <%= check_box_tag :delete_avatar %>
+            delete this avatar
+          </label>
+        </div>
+    </div>
+  <% end %>
+
+
+  <div class="uk-form-row">
+      <label class="uk-form-label" for="">New avatar</label>
+      <div class="uk-form-controls">
+        <%= f.file_field :avatar %>
+      </div>
+  </div>
+
+  <p class="fields">
+    <%= f.submit nil, class: 'uk-button uk-button-large uk-button-primary' %>
+  </p>
+<% end %>

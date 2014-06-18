@@ -1,0 +1,16 @@
+<div class="uk-text-center">
+  <h1 class="uk-text-danger">Warning!!</h1>
+  
+  <br>
+
+  <p>
+    Leave this page unless you are an administrator.<br>
+    If you are an administrator of this project and want to delete this project, click button below.
+  </p>
+
+  <br>
+
+  <p>
+    <%= link_to 'Delete Project', project_path(@project), method: :delete, class: 'uk-button uk-button-large uk-button-danger', data: {confirm: 'Are you sure?'} %>
+  </p>
+</div>

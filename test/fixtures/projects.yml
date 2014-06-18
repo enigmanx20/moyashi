@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  comment: MyText
+  m_z_start: 1.5
+  m_z_end: 1.5
+  m_z_interval: 1.5
+
+two:
+  name: MyString
+  comment: MyText
+  m_z_start: 1.5
+  m_z_end: 1.5
+  m_z_interval: 1.5

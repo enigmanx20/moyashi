@@ -1,0 +1,2 @@
+module ExtractionHelper
+end

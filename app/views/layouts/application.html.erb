@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>fuNalyzer</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <nav class="uk-navbar uk-navbar-attached">
+    <ul class="uk-navbar-nav">
+      <a class="uk-navbar-brand", href="/">fuNalyzer</a>
+
+      <% if @project.try(:id) %>
+        <li class="uk-parent" data-uk-dropdown>
+          <%= link_to project_path(@project) do %>
+            Project - <%= truncate @project.name %>
+            <i class="uk-icon-caret-down"></i>
+          <% end %>
+
+          <div class="uk-dropdown uk-dropdown-navbar">
+            <ul class="uk-nav uk-nav-navbar">
+              <li>
+                <%= link_to project_path(@project) do %>
+                  <i class="uk-icon-home"></i>
+                  Project Home
+                <% end %>
+              </li>
+
+              <li class="uk-nav-divider"></li>
+
+              <li>
+                <%= link_to edit_project_path(@project) do %>
+                  <i class="uk-icon-gear"></i>
+                  Project settings
+                <% end %>
+              </li>
+
+              <li class="uk-nav-divider"></li>
+
+              <li class="uk-nav-header">
+                for Admin
+              </li>
+
+              <li>
+                <%= link_to labels_project_path(@project) do %>
+                  <i class="uk-icon-warning uk-text-danger"></i>
+                  <i class="uk-icon-gear"></i>
+                  Lable Management
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to delete_project_path(@project) do %>
+                  <i class="uk-icon-warning uk-text-danger"></i>
+                  <i class="uk-icon-gear"></i>
+                  Delete Project
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="uk-parent" data-uk-dropdown>
+          <a href="">
+            Data I/O
+            <i class="uk-icon-caret-down"></i>
+          </a>
+
+          <div class="uk-dropdown uk-dropdown-navbar">
+            <ul class="uk-nav uk-nav-navbar">
+              <li>
+                <%= link_to new_project_record_path(@project) do %>
+                  <i class="uk-icon-sign-in"></i>
+                  Input Data
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to show_project_extract_path(@project) do %>
+                  <i class="uk-icon-sign-out"></i>
+                  Extract Data
+                <% end %>
+              </li>
+            
+              <li class="uk-nav-divider"></li>
+
+              <li class="uk-nav-header">
+                for Admin
+              </li>
+
+              <li>
+                <%= link_to delete_records_project_path(@project) do %>
+                  <i class="uk-icon-warning uk-text-danger"></i>
+                  <i class="uk-icon-gear"></i>
+                  Delete Data
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to new_project_path do %>
+            <i class="uk-icon-plus-circle"></i>
+            New Project
+          <% end %>
+        </li>
+      <% end %>
+
+
+
+      <li class="uk-parent" data-uk-dropdown>
+        <a href="">
+          Analysis
+          <i class="uk-icon-caret-down"></i>
+        </a>
+
+        <div class="uk-dropdown uk-dropdown-navbar">
+          <ul class="uk-nav uk-nav-navbar">
+            <li class="uk-nav-header">
+              MATLAB
+            </li>
+
+            <li>
+              <%= link_to matlab_pca_lda_path do %>
+                PCA-LDA
+              <% end %>
+            </li>
+
+            <li>
+              <%= link_to matlab_pca_qda_path do %>
+                PCA-QDA
+              <% end %>
+            </li>
+
+            <li>
+              <%= link_to matlab_wilcoxon_rank_sum_test_path do %>
+                Wilcoxon rank-sum test
+              <% end %>
+            </li>
+
+            <li>
+              <%= link_to matlab_welch_ttest_path do %>
+                Welch T-test
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+
+    </ul>
+
+    <div class="uk-navbar-flip">
+        <ul class="uk-navbar-nav">
+            <li><a href="/manual/manual.pdf">Manual</a></li>
+        </ul>
+    </div>
+  </nav>
+
+
+  <div class="my-content">
+    <%= yield %>
+  </div>
+
+  <footer class="my-footer">
+    <strong>fuNalyzer</strong>&nbsp;&nbsp;&nbsp;&nbsp;Copyright 2014 Satoshi Funayama (Akchan)  All right reserved.
+  </footer>
+</body>
+</html>

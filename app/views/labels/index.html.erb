@@ -1,0 +1,64 @@
+<h1>Label Management</h1>
+
+<div class="uk-alert uk-alert-danger">
+  <h2>Warning!</h2>
+  Don't touch anything on this page unless you are an administrator of this project.
+</div>
+
+<h3>About</h3>
+<hr>
+<div class="my-fields">
+  <ul>
+    <li>Here, you can manage labels for Project <%= @project.name %>.</li>
+    <li>Input label name and entry. </li>
+    <li>Label entry should be inputed into text area spliting with return.</li>
+    <li>If you want to make a label to input free text (ex. memo), leave the text area clear. fuNalyzer will not validate free text labels.</li>
+    <li>Labels will not be saved until click save button.</li>
+  </ul>
+</div>
+
+
+<h3>Label</h3>
+<hr>
+
+<%= form_for @project, url: labels_project_path(@project), html: {class: 'uk-form uk-form-horizontal'} do |f| %>
+  <% if notice %>
+    <p class="uk-alert">
+      <%= notice %>
+    </p>
+  <% end %>
+
+  <% if @project.errors.any? %>
+    <div id="error_explanation" class="uk-alert uk-alert-danger">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+        <% @project.errors.each do |name, msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <% if @project.labels.empty? %>
+    <p>
+      No label was found.
+    </p>
+  <% end %>
+
+
+  <div class="sortable">
+    <%= f.fields_for :labels, @labels do |l| %>
+
+      <%= render 'label_fields', f: l %>
+    <% end %>
+  </div>
+  <p><%= link_to_add_fields_for_label "add Label", f, :labels, class: 'uk-button uk-button-large'%></p>
+
+
+
+  <div class="fields">
+    <%= f.submit 'Save', class: 'uk-button uk-button-large uk-button-primary', data: {confirm: "Are you sure? This saving can't be canceled." } %>
+  </div>
+<% end %>

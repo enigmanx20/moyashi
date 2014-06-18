@@ -1,0 +1,24 @@
+<h1>Projects</h1>
+
+<% if notice %>
+  <div class="my-fields">
+    <p class="uk-alert">
+      <%= notice %>
+    </p>
+  </div>
+<% end %>
+
+<div id="freetile-container" class="my-fields">
+  <% @projects.each do |project| %>
+    <div class="my-project-box">
+      <%= link_to project_path(project) do %>
+        <div class="my-project-avatar-medium">
+          <%= image_tag project.avatar.url(:medium), class: 'my-project-avator-medium' %>
+        </div>
+      <% end %>
+      <div class="my-project-title uk-text-center">
+        <%= project.name %>
+      </div>
+    </div>
+  <% end %>
+</div>

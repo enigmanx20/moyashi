@@ -1,0 +1,13 @@
+<h1>Input Data</h1>
+
+<%= form_for @record, url: project_records_path(@project.id), html:{class: 'uk-form uk-form-horizontal', enctype: 'multipart/form-data'} do |f| %>
+  <%= render partial: 'form', locals: {f:f} %>
+  
+  <div class="actions">
+    <%= f.submit 'Submit and input next', class: 'uk-button uk-button-primary uk-button-large' %>
+  </div>
+<% end %>
+
+<p>
+  <%= link_to 'Back', project_path(@project), class: 'uk-button uk-button-large' %>
+</p>

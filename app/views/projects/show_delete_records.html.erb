@@ -1,0 +1,70 @@
+<h1 class="uk-text-danger">Delete Data</h1>
+
+<% if notice %>
+  <div class="my-fields">
+    <p class="uk-alert uk-alert-danger">
+      <%= notice %>
+    </p>
+  </div>
+<% end %>
+
+<div class="my-fields">
+  <ul>
+    <li>Select each check box of records which you want to delete.</li>
+  </ul>
+</div>
+
+
+
+<%= form_tag delete_records_project_path(@project), class: 'uk-form' do %>
+  <p>
+    n = <%= @records.size %>
+  </p>
+
+  <div class="my-fields">
+    <table class="my-table-tablesorter my-table uk-table-striped uk-table-hover">
+      <thead>
+        <tr>
+          <th class="uk-text-danger">
+            Delete
+          </th>
+          <% @table_header.each do |column| %>
+            <th>
+              <%= column %>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @records.each do |record| %>
+          <tr id="<%= record.id %>">
+            <td class="uk-text-center">
+              <%= check_box_tag "deleting_records[]", record.id, false %>
+            </td>
+            <% @table_header.each do |column| %>
+              <% col = record.send(column) %>
+              <% case column %>
+              <% when :created_at, :updated_at %>
+                <td>
+                  <%= col.strftime("%Y/%m/%d %H:%M") %>
+                </td>
+              <% when :spectrum_total_intensity %>
+                <td>
+                  <%= sprintf("%.3e", col.to_f) %>
+                </td>
+              <% else %>
+                <td>
+                  <%= col %>
+                </td>
+              <% end %>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="my-fields">
+    <%= submit_tag 'Delete', class: 'uk-button uk-button-large uk-button-danger', data: {confirm: 'Are you sure?'} %>
+  </div>
+<% end %>

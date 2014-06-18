@@ -1,0 +1,154 @@
+@import 'uikit.gradient.min.css.scss';
+
+/* ==================================================
+ * = for layout
+ * ================================================== */
+.my-content {
+    min-height: 1000px;
+
+    margin-bottom: 150px;
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.my-fields {
+    margin-bottom: 50px;
+}
+
+.my-footer {
+    height: 50px;
+    width: 100%;
+
+    border-top: solid 1px #ccc;
+    padding-top: 20px;
+    padding-left: 30px;
+
+    background-color: #f3f3f3;
+}
+
+.my-italic {
+    font-style: italic;
+}
+
+
+
+/* ==================================================
+ * = for form
+ * ================================================== */
+ .fields {
+    margin-bottom: 20px;
+ }
+
+.field_with_errors {
+    input {
+        @extend .uk-form-danger;
+    }
+}
+
+
+/* ==================================================
+ * = for project index
+ * ================================================== */
+.my-project-box {
+    width: 300px;
+    height: 350px;
+    margin: 20px;
+    display: inline-block;
+    a:hover {
+        opacity: 0.9;
+        transition: opacity 0.2s linear;
+    }
+}
+
+.my-project-avatar-medium {
+    height: 300px;
+    background-color: #eee;
+    border-radius: 15px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+
+    img {
+        border-radius: 15px;
+    }
+
+    position: relative;
+    line-height: 0;
+    font-size: 0;
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        box-shadow: inset 0 0 10px rgba(255,255,255,0.9);
+    }
+}
+
+.my-project-avatar-thumb {
+    img {
+        border-radius: 5px;
+    }
+
+    margin: 5px;
+
+    display: inline-block;
+    position: relative;
+    line-height: 0;
+    font-size: 0;
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        box-shadow: inset 0 0 4px rgba(255,255,255,0.9);
+    }
+}
+
+.my-project-title {
+    font-size: 20px;
+    padding-top: 5px;
+}
+
+
+
+/* ==================================================
+ * = for show project
+ * ================================================== */
+.my-table {
+    white-space: nowrap;
+    th {
+        padding-left: 5px;
+    }
+    td {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+
+
+
+/* ==================================================
+ * = for tablesorter
+ * ================================================== */
+table.my-table-tablesorter thead tr .header {
+    padding-right: 21px;
+    background-image: image-url("tablesorter/bg.gif");
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+}
+table.my-table-tablesorter thead tr .headerSortUp {
+    background-image: image-url("tablesorter/asc.gif");
+}
+table.my-table-tablesorter thead tr .headerSortDown {
+    background-image: image-url("tablesorter/desc.gif");
+}

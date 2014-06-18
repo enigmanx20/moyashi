@@ -1,0 +1,67 @@
+<h1>MATALB Wilcoxon Rank-Sum test analysis</h1>
+
+<%= form_tag matlab_wilcoxon_rank_sum_test_path, class: 'uk-form uk-form-horizontal', enctype: 'multipart/form-data' do %>
+
+  <% if notice %>
+    <p class="uk-alert">
+      <%= notice %>
+    </p>
+  <% end %>
+
+  <% if alert %>
+    <p class="uk-alert uk-alert-danger">
+      <%= notice %>
+    </p>
+  <% end %>
+
+  <fieldset>
+    <legend>options</legend>
+    
+    <div class="uk-form-row">
+      <label class="uk-form-label">
+        m/<span class="my-italic">z</span> min
+      </label>
+
+      <div class="uk-form-controls">
+        <%= text_field_tag :m_z_min, params[:m_z_min] || 10.0 %>
+      </div>
+    </div>
+    
+    <div class="uk-form-row">
+      <label class="uk-form-label">
+        m/<span class="my-italic">z</span> max
+      </label>
+
+      <div class="uk-form-controls">
+        <%= text_field_tag :m_z_max, params[:m_z_max] || 2000.0 %>
+      </div>
+    </div>
+    
+    <div class="uk-form-row">
+      <label class="uk-form-label">
+        Source file 1
+      </label>
+
+      <div class="uk-form-controls">
+        <%= file_field_tag :file1 %>
+      </div>
+    </div>
+    
+    <div class="uk-form-row">
+      <label class="uk-form-label">
+        Source file 2
+      </label>
+
+      <div class="uk-form-controls">
+        <%= file_field_tag :file2 %>
+      </div>
+    </div>
+
+
+  </fieldset>
+
+  <%= submit_tag 'Run', class: 'uk-button uk-button-large uk-button-primary' %>
+
+  <%= link_to 'Load default', matlab_wilcoxon_rank_sum_test_path, class: 'uk-button uk-button-large' %>
+
+<% end %>

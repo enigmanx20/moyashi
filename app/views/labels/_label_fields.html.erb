@@ -1,0 +1,32 @@
+<div class="fields" style="margin-bottom: 10px;">
+  <%= f.hidden_field :label_order %>
+  
+  <div class="uk-panel uk-panel-box" style="display:inline-block;">
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">
+          <strong>Label name</strong>
+        </label>
+        <div class="uk-form-controls">
+          <strong>Label entry</strong>
+        </div>
+    </div>
+
+    <div class="uk-form-row">
+      <label class="uk-form-label" for="">
+        <%= f.text_field :name %>
+      </label>
+      <div class="uk-form-controls">
+        <div>
+          <%= f.text_area :white_list, rows: 13, cols: 50 %>
+        </div>
+        <p>
+          <%= f.check_box :uniqueness %>
+          <%= f.label :uniqueness, 'unique' %>
+        </p>
+        <div class="uk-text-right">
+          <%= link_to_remove_fields "delete label", f, class: 'uk-button uk-button-mini uk-button-danger' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

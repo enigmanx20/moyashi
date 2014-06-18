@@ -1,0 +1,107 @@
+<% if notice %>
+  <p class="">
+    <%= notice %>
+  </p>
+<% end %>
+
+<% if @record.errors.any? %>
+  <div id="error_explanation" class="uk-alert uk-alert-danger">
+    <h2><%= pluralize(@record.errors.count, "error") %> prohibited this record from being saved:</h2>
+
+    <ul>
+    <% @record.errors.each do |key, msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<fieldset>
+  <legend>Label</legend>
+  <% if @labels.any? %>
+    <% @labels.each do |column| %>
+      <div class="uk-form-row">
+        <label class="uk-form-label">
+          <%= column.name %>
+        </label>
+
+        <div class="uk-form-controls">
+          <% if column.white_list.split("\n") == [] %>
+            <%= text_field_tag "record[#{column.name}]", @record.send(column.name.to_sym), size: 60 %>
+          <% else %>
+            <select name="record[<%= column.name %>]">
+              <% column.white_list.split("\n").each do |choice| %>
+                <% if choice[0] == '#' %>
+                  <optgroup label="<%= choice[1..-1] %>" ><optgroup>
+                <% else %>
+                  <%= options_for_select [["&nbsp;#{choice}".html_safe, choice]], @record.send(column.name) %>
+                <% end %>
+              <% end %>
+            </select>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>
+      No label is defined.<br>
+      Please add labels on <%= link_to 'Label management', labels_project_path(@project) %> page.
+    </p>
+  <% end %>
+</fieldset>
+
+<fieldset>
+  <legend>Spectrum</legend>
+
+  <% unless @record.new_record? %>
+    <div class="uk-form-row">
+      <label class="uk-form-label">
+        Sample ID of spectrum
+      </label>
+      <div class="uk-form-controls">
+        <%= @record.spectrum_sample_id %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="uk-form-row">
+    <label class="uk-form-label">
+      Spectrum Data
+    </label>
+    <div class="uk-form-controls">
+      <%= file_field_tag :spectrum %>
+    </div>
+  </div>
+
+  <div class="uk-form-row">
+    <label class="uk-form-label">
+      Spectrum Format
+    </label>
+    <div class="uk-form-controls">
+      <select name="spectrum_format">
+        <option value="raw">raw</option>
+        <option value="normalized">converted(normalized)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="uk-form-row">
+    <label class="uk-form-label">
+      Options to input spectrum
+    </label>
+    <div class="uk-form-controls" style="padding-top:5px;">
+      <div class="fields">
+        <label>
+          <%= check_box_tag :spectrum_re_allocation, "1", true %>
+          Re-allocate m/<span class="my-italic">z</span> information
+        </label>
+      </div>
+      <div class="fields">
+        <label>
+          &nbsp;&nbsp;&nbsp;&nbsp;The first m/<span class="my-italic">z</span> for re-allocating
+          <%= text_field_tag :spectrum_first_m_z, @record.project.m_z_start %>
+        </label>
+      </div>
+    </div>
+  </div>
+</fieldset>

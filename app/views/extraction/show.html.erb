@@ -1,0 +1,190 @@
+<h1>Extract Data</h1>
+
+<% if notice %>
+  <p class="uk-alert">
+    <%= notice %>
+  </p>
+<% end %>
+
+<h2>Searching</h2>
+<div class="my-fields">
+  <%= form_tag show_project_extract_path(@project) do %>
+    <% if @columns.any? %>
+      <table class="my-table">
+        <thead>
+          <% @columns.each do |column| %>
+            <th>
+              <%= column.name %>
+            </th>
+          <% end %>
+        </thead>
+        <tbody>
+          <tr>
+            <% @columns.each do |column| %>
+              <td>
+                <select name="search[<%= column.name %>][]" style="height:200px;" multiple>
+                  <%= options_for_select column.white_list.split("\n").map{|v| [v,v]}, params[:search].try(:fetch, column.name,nil) %>
+                </select>
+              </td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    <% else %>
+      No labels or only free text label is defined.
+    <% end %>
+
+    <p>
+      * multiple selection is allowed.
+    </p>
+
+    <div class="fields">
+      <%= submit_tag 'Search', class: 'uk-button uk-button-large uk-button-primary' %>
+    </div>
+  <% end %>
+</div>
+
+
+<div id="searched" class="my-fields">
+  <% if @records %>
+
+    <h2>Extraction</h2>
+
+    <%= form_tag extract_project_extract_path(@project), class: 'uk-form uk-form-horizontal' do %>
+
+      <% if params[:search] %>
+        <% params[:search].each_pair do |name, ary| %>
+          <% ary.each do |value| %>
+            <%= hidden_field_tag "search[#{name}][]", value %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <fieldset>
+        <legend>Searched data</legend>
+
+        <table class="my-table my-table-tablesorter">
+          <thead>
+            <tr>
+              <th>
+                use?
+              </th>
+              <% @table_header.each do |column| %>
+                <th>
+                  <%= column %>
+                </th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% @records.each do |record| %>
+              <tr id="<%= record.id %>">
+                <td>
+                  <% if params[:ids] %>
+                    <% flg = params[:ids].include?(record.id.to_s) ? true : false %>
+                  <% else %>
+                    <% flg = true %>
+                  <% end %>
+                  <%= check_box_tag 'ids[]', record.id, flg %>
+                </td>
+
+                <% @table_header.each do |column| %>
+                  <% col = record.send(column) %>
+                  <% case column %>
+                  <% when :id %>
+                    <td class="uk-text-center">
+                      <%= link_to col, project_record_path(@project, record) %>
+                    </td>
+                  <% when :created_at, :updated_at %>
+                    <td>
+                      <%= col.strftime("%Y/%m/%d %H:%M") %>
+                    </td>
+                  <% when :spectrum_total_intensity %>
+                    <td>
+                      <%= sprintf("%.3e", col.to_f) %>
+                    </td>
+                  <% else %>
+                    <td>
+                      <%= col %>
+                    </td>
+                  <% end %>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <% if @records.empty? %>
+          No data was found.
+        <% end %>
+      </fieldset>
+
+      <fieldset>
+        <legend>Options</legend>
+
+        <div class="uk-form-row">
+          <label class="uk-form-label">
+            Group Name
+          </label>
+          <div class="uk-form-controls">
+            <%= text_field_tag 'group_name', params[:group_name] %>
+          </div>
+        </div>
+
+        <div class="uk-form-row">
+          <label class="uk-form-label">
+            Lower limit of m/<span class="my-italic">z</span>
+          </label>
+          <div class="uk-form-controls">
+            <%= text_field_tag 'm_z_lower_limit', @project.m_z_start %>
+          </div>
+        </div>
+
+        <div class="uk-form-row">
+          <label class="uk-form-label">
+            Higher limit of m/<span class="my-italic">z</span>
+          </label>
+          <div class="uk-form-controls">
+            <%= text_field_tag 'm_z_higher_limit', @project.m_z_end %>
+          </div>
+        </div>
+
+        <div class="uk-form-row">
+          <label class="uk-form-label">
+            Data format
+          </label>
+          <div class="uk-form-controls">
+            <select name="data_format">
+              <option value="tsv" selected>tsv</option>
+              <option value="csv">csv</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="uk-form-row">
+          <label class="uk-form-label">
+            Exclude NULL
+          </label>
+          <div class="uk-form-controls">
+            <%= check_box_tag 'exclude_null', true, true %>
+          </div>
+        </div>
+
+        <div class="uk-form-row">
+          <label class="uk-form-label">
+            Exclude m/<span class="my-italic">z</span>
+          </label>
+          <div class="uk-form-controls">
+            <%= text_field_tag 'exclude_m_z', params[:exclude_m_z], placeholder: 'split m/z with comma or tab', size: 80 %>
+          </div>
+        </div>
+
+        <p class="fileds">
+          <%= submit_tag 'Store data for statistical analysis', class: 'uk-button uk-button-large uk-button-primary' %>
+        </p>
+      </fieldset>
+    <% end %>
+
+
+  <% end %>
+</div>
