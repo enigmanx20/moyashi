@@ -1,6 +1,6 @@
 Funalyzer::Application.routes.draw do
   # ==================================================
-  # = Routing for matlab analysis
+  # = matlab analysis
   # ==================================================
   get "matlab/pca_lda", as: 'matlab_pca_lda'
   post 'matlab/pca_lda' => 'matlab#run_pca_lda'
@@ -14,7 +14,7 @@ Funalyzer::Application.routes.draw do
 
 
   # ==================================================
-  # = Routing for data extracting
+  # = data extracting
   # ==================================================
   get "projects/:id/extract/show" => 'extraction#show', as: 'show_project_extract'
   post "projects/:id/extract/show" => 'extraction#search'
@@ -24,7 +24,7 @@ Funalyzer::Application.routes.draw do
 
 
   # ==================================================
-  # = Routing for project
+  # = projects
   # ==================================================
   resources :projects do
     member do
@@ -41,7 +41,22 @@ Funalyzer::Application.routes.draw do
       end
     end
   end
+
+
+
   root 'projects#index'
+
+
+
+
+  # ==================================================
+  # = Analysis
+  # ==================================================
+
+  # get -> 'pca_show'
+  # post -> 'pca'
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

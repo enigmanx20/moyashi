@@ -1,7 +1,7 @@
 class AnalysisController < MoyashiAnalysisController
 
   define_params :pca, {pcx: :integer, pcy: :integer, file1: :file, file2: :file}
-  
+
   def pca
   end
 end
@@ -16,7 +16,7 @@ module MoyashiController
 
   module ClassMethods
     def define_params(name, params)
-      name += "_show"
+      name = name.to_s + "_show"
       define_method name do
         raise 'Invalid parameter type' unless valid_params_type?(params)
         @_moyashi_show_params = params
@@ -30,7 +30,7 @@ module MoyashiController
         flg = true
 
         params.values do |v|
-          unless PARAMS_TYPES.include?(v)
+          unless PARAMS_TYPES.include?(v.to_sym)
             flg = false
             break
           end
