@@ -11,6 +11,11 @@ Funalyzer::Application.routes.draw do
   get "matlab/welch_ttest", as: 'matlab_welch_ttest'
   post 'matlab/welch_ttest' => 'matlab#run_welch_ttest'
 
+  # ==================================================
+  # = Routing for R analysis
+  # ==================================================
+  get "rscript/pca", as: 'rscript_pca'
+  post 'rscript/pca' => 'rscript#run_pca'
 
 
   # ==================================================
